@@ -1,0 +1,28 @@
+---
+- name: Ensure admins group exists
+  ansible.builtin.group:
+    name: admins
+    state: present
+
+- name: Privileged user exists
+  ansible.builtin.user:
+    state: present
+    name: "{{ privileged_user }}"
+    groups: admins 
+    append: true
+    generate_ssh_key: true
+    ssh_key_type: "ed25519"
+    ssh_key_file: .ssh/id_rsa
+    password: "*"
+  register: ssh_fingerprint
+
+- name: The admin's public key is
+  ansible.builtin.debug:
+    var: ssh_fingerprint.ssh_public_key
+
+- name: Set authorized key for privileged user 
+  ansible.posix.authorized_key:
+    state: present
+    key: "{{ privileged_user_ssh_pubkey }}"
+    user: "{{ privileged_user }}"
+    exclusive: true

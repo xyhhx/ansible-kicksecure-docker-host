@@ -1,0 +1,31 @@
+---
+- name: gvisor is downloaded
+  ansible.builtin.get_url:
+    url: "{{ gvisor_src_base_url }}/runsc" 
+    dest: /usr/local/bin/runsc
+    checksum: "{{ runsc_checksum }}" 
+    mode: "0744"
+
+- name: containerd-shim is downloaded
+  ansible.builtin.get_url:
+    url: "{{ gvisor_src_base_url }}/containerd-shim-runsc-v1"
+    dest: /usr/local/bin/containerd-shim-runsc-v1
+    checksum: "{{ containerd_shim_runsc_checksum }}" 
+    mode: "0744"
+
+- name: Ensure /etc/docker exists
+  ansible.builtin.file:
+    dest: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure gvisor is installed 
+  ansible.builtin.copy:
+    src: docker-daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: "0644"
+  notify: "Restart Docker service" 

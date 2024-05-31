@@ -1,0 +1,3 @@
+---
+privileged_user: "{{ lookup('env', 'ADMIN_USERNAME') }}"
+privileged_user_ssh_pubkey: "{{ lookup('env', 'ADMIN_SSH_PUBKEY') }}"

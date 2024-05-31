@@ -1,0 +1,49 @@
+---
+- name: Delete /etc/apt/sources.list
+  ansible.builtin.copy:
+    src: sources.list
+    dest: /etc/apt/sources.list
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Ensure vi is absent
+  ansible.builtin.file:
+    dest: /usr/bin/vi
+    state: absent
+
+- name: Ensure vim is absent
+  ansible.builtin.apt:
+    name: vim
+    state: absent
+
+- name: Ensure nano is absent
+  ansible.builtin.apt:
+    name: nano 
+    state: absent
+
+- name: Ensure autoremovable packages are absent 
+  ansible.builtin.apt:
+    autoremove: true
+
+- name: Ensure kicksecure APT repo is enabled
+  ansible.builtin.command: repository-dist --enable --repository stable
+
+- name: Ensure Kicksecure external repo is disabled
+  ansible.builtin.command: extrepo disable kicksecure
+
+- name: Ensure default privileged user locked
+  ansible.builtin.user:
+    state: present
+    name: root
+    password: "!"
+    password_lock: true
+    shell: /sbin/nologin
+
+- name: Ensure root user locked
+  ansible.builtin.user:
+    state: present
+    name: root
+    password: "!"
+    password_lock: true
+    shell: /sbin/nologin

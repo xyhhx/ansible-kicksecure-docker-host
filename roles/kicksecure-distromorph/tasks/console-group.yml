@@ -1,0 +1,11 @@
+---
+- name: Ensure console group exists
+  ansible.builtin.group:
+    name: console
+    state: present
+
+- name: Ensure privileged user is in console group
+  ansible.builtin.user:
+    name: "{{ privileged_user }}"
+    groups: console
+    append: true

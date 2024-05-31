@@ -1,0 +1,5 @@
+---
+- include_tasks: console-group.yml 
+- include_tasks: repos.yml 
+- include_tasks: install.yml
+- include_tasks: post-install.yml

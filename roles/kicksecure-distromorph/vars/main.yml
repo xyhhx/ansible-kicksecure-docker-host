@@ -1,0 +1,5 @@
+---
+derivative_list: /etc/apt/sources.list.d/derivative.list
+kicksecure_signing_key: https://www.kicksecure.com/keys/derivative.asc
+privileged_user: "{{ lookup('env', 'ADMIN_USERNAME') }}"
+

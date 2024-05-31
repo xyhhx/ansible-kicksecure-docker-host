@@ -1,0 +1,38 @@
+---
+image: alpine/edge
+packages:
+  - git
+sources:
+  - https://git.sr.ht:~xyhhx/ansible-kicksecure-docker-host
+secrets:
+  - 77ed98a8-6ba6-4825-b700-060fc3c5c9d7 
+  - 0cae6893-81a1-4712-b0be-a7a37317c074
+environment:
+  repo_name: ansible-kicksecure-docker-host
+
+  github_username: xyhhx
+  github_repo: xyhhx/ansible-kicksecure-docker-host
+
+  codeberg_username: xyhhx
+  codeberg_repo: xyhhx/ansible-kicksecure-docker-host
+tasks:
+  - github: |
+      set +x
+      cd "${repo_name}"
+      github_token=$(cat ~/secrets/github_pat)
+      github_url=$(printf \
+        "https://%s:%s@github.com/%s" \
+        "${github_username}" \
+        "${github_token}" \
+        "${github_repo}")
+      git push --all "${github_url}" -f
+  - codeberg: |
+      set +x
+      cd "${repo_name}"
+      codeberg_token=$(cat ~/secrets/codeberg_pat)
+      codeberg_url=$(printf \
+        "https://%s:%s@codeberg.org/%s"\
+        "${codeberg_username}" \
+        "${codeberg_token}" \
+        "${codeberg_repo}")
+      git push --all "${codeberg_url}" -f

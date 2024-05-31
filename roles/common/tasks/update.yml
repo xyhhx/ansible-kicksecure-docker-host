@@ -1,0 +1,6 @@
+---
+- name: Ensure OS is up to date 
+  become: true
+  ansible.builtin.apt:
+    upgrade: full
+    update_cache: yes

@@ -1,0 +1,7 @@
+---
+- name: Ensure kicksecure-cli-host package group is installed
+  ansible.builtin.apt:
+    name: kicksecure-cli-host
+    state: present
+    install-recommends: false
+    update_cache: true

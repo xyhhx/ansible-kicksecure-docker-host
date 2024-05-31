@@ -1,0 +1,15 @@
+---
+- name: Install Kicksecure signing key
+  ansible.builtin.get_url:
+    url: "{{ kicksecure_signing_key }}" 
+    dest: /usr/share/keyrings/derivative.asc
+    mode: '0644'
+
+- name: Install Kicksecure repo
+  ansible.builtin.copy:
+    src: derivative.list 
+    dest: "{{ derivative_list }}" 
+    owner: root
+    group: root
+    mode: '0644'
+

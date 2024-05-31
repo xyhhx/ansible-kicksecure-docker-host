@@ -1,0 +1,2 @@
+# Allow users of 'admins' group to user sudo with no pass
+%admins ALL=(ALL) NOPASSWD: ALL

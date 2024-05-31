@@ -1,0 +1,8 @@
+---
+- hosts: kicksecure_docker_hosts
+  become: true
+  remote_user: "{{ lookup('env', 'ADMIN_USERNAME') }}"
+  roles:
+    - ../roles/common
+    - ../roles/kicksecure-distromorph
+    - ../roles/docker-setup
